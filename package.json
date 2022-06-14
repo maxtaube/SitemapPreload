@@ -1,6 +1,6 @@
 {
-  "name": "sitemap-parser",
-  "version": "0.0.0",
+  "name": "sitemap-preload",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"

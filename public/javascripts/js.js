@@ -48,3 +48,7 @@ $(document).ready(function () {
     });
   });
 });
+
+/**TODO
+* empty container before reload aka don't append new iframes
+*/

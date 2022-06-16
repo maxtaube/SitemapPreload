@@ -1,13 +1,20 @@
 const submitButton = document.getElementById("submit");
-const MAXIFRAMES = Number(20);
+var MAXIFRAMES = Number(20);
 
-//make api request on submit
 $(document).ready(function () {
+  // setup
+  try {
+    MAXIFRAMES = document.getElementById("numberinput").value;
+  } catch (error) {
+    console.log(error);
+  }
   var input = document.getElementById("input");
 
+  //make api request on submit
   submitButton.addEventListener("click", function (event) {
-    var inputValue = String(input.value);
     event.preventDefault();
+    var inputValue = String(input.value);
+    $("#framesContainer").empty();
 
     var formdata = new FormData();
     let sendurl = inputValue.startsWith("https://")
@@ -25,6 +32,7 @@ $(document).ready(function () {
       .ajaxStop(function () {
         console.log("ajax stop");
         document.getElementById("loading").remove();
+        submitButton.innerHTML = "Submit New";
       });
 
     $.ajax({
@@ -38,7 +46,7 @@ $(document).ready(function () {
       type: "POST", // For jQuery < 1.9
       success: function (data) {
         console.log(data.length, data);
-        manageIframes(data)
+        manageIframes(data);
       },
     });
   });
@@ -49,31 +57,34 @@ $(document).ready(function () {
  * @param {array} data
  */
 let manageIframes = (data) => {
-  console.log("remaining data entries : ", data.length);
-  var next = $('#next');
-
-   // if iframes exist
-  $("#framesContainer").empty();
+  var next = $("#next");
 
   if (data.length > MAXIFRAMES) {
-    var data1 = data.slice(0, MAXIFRAMES); // array with length of MAXIFRAMES
-    var data2 = data.slice(MAXIFRAMES); // array with the rest
-    console.log(data1.length, data2.length);
+    var data1 = data.slice(0, MAXIFRAMES); // array with size of MAXIFRAMES
+    var data2 = data.slice(MAXIFRAMES); // array with the rest of the elements
+    var nextChunk = data2.length > MAXIFRAMES ? MAXIFRAMES : data2.length;
+    console.log("now split into", data1.length, " and ", data2.length);
+    console.log("next chunk is", nextChunk);
 
-    next.html(`Preload the next ${data2.length} pages`).show();
+    next.html(`Preload the next ${nextChunk} pages`).show();
 
     displayIframes(data1);
+    console.log("remaining data entries : ", data2.length);
+
     // create event listener for button
-    next.on('click', () => {
+    next.on("click", () => {
       manageIframes(data2);
     });
-  }
-  else {
+  } else {
     displayIframes(data);
     next.hide();
   }
 };
 
+/**
+ *
+ * @param {array} data
+ */
 let displayIframes = (data) => {
   data.forEach((element) => {
     // create iframe
@@ -89,5 +100,4 @@ let displayIframes = (data) => {
     wrapper.appendChild(insideWrapper);
     document.getElementById("framesContainer").appendChild(wrapper);
   });
-  submitButton.innerHTML = "Submit New";
-}
+};

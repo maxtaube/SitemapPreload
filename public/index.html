@@ -1,17 +1,22 @@
 <html>
+
 <head>
   <title>Sitemap Preloader</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
   <script src="./javascripts/jquery.js"></script>
   <script defer src="./javascripts/js.js"></script>
 </head>
 
 <body>
-  <p style="display:inline-block; margin:0;">https://</p>
-  <input style="display:inline-block;" id="input" type="text">
-  <button id="submit">Submit</button>
-  <button id="next"></button>
+  <div class="container">
+    <p style="display:inline-block; margin:0;">https://</p>
+    <input style="display:inline-block;" id="input" type="text">
+    <input id="numberinput" type="number" value="30">
+    <button id="submit">Submit</button>
+    <button id="next"></button>
+  </div>
   <div id="framesContainer"></div>
 </body>
+
 </html>

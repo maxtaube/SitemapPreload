@@ -14,7 +14,6 @@ $(document).ready(function () {
   submitButton.addEventListener("click", function (event) {
     event.preventDefault();
     var inputValue = String(input.value);
-    $("#framesContainer").empty();
 
     var formdata = new FormData();
     let sendurl = inputValue.startsWith("https://")
@@ -58,13 +57,14 @@ $(document).ready(function () {
  */
 let manageIframes = (data) => {
   var next = $("#next");
+  $("#framesContainer").empty();
 
   if (data.length > MAXIFRAMES) {
     var data1 = data.slice(0, MAXIFRAMES); // array with size of MAXIFRAMES
     var data2 = data.slice(MAXIFRAMES); // array with the rest of the elements
     var nextChunk = data2.length > MAXIFRAMES ? MAXIFRAMES : data2.length;
-    console.log("now split into", data1.length, " and ", data2.length);
-    console.log("next chunk is", nextChunk);
+    /* console.log("now split into", data1.length, " and ", data2.length);
+    console.log("next chunk is", nextChunk); */
 
     next.html(`Preload the next ${nextChunk} pages`).show();
 
@@ -88,7 +88,6 @@ let manageIframes = (data) => {
 let displayIframes = (data) => {
   data.forEach((element) => {
     // create iframe
-    console.log(element);
     var iframe = document.createElement("iframe");
     iframe.src = element;
     iframe.frameBorder = "0";

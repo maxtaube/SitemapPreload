@@ -20,6 +20,8 @@ $(document).ready(function () {
       ? inputValue
       : "https://" + inputValue;
     formdata.append("url", sendurl);
+
+    // loading
     $(document)
       .ajaxStart(function () {
         console.log("ajax start");
@@ -45,6 +47,10 @@ $(document).ready(function () {
       type: "POST", // For jQuery < 1.9
       success: function (data) {
         console.log(data.length, data);
+
+        /** render the list of urls that we get from the server as iFrames */
+
+
         manageIframes(data);
       },
     });

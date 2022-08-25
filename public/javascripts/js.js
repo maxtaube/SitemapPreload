@@ -8,18 +8,22 @@ $(document).ready(function () {
   } catch (error) {
     console.log(error);
   }
+
   var input = document.getElementById("input");
+  var checkbox = document.getElementById("checkbox");
 
   //make api request on submit
   submitButton.addEventListener("click", function (event) {
     event.preventDefault();
     var inputValue = String(input.value);
+    var checkboxValue = checkbox.checked;
 
     var formdata = new FormData();
     let sendurl = inputValue.startsWith("https://")
       ? inputValue
       : "https://" + inputValue;
     formdata.append("url", sendurl);
+    formdata.append("iframe", checkboxValue);
 
     // loading
     $(document)
@@ -49,9 +53,13 @@ $(document).ready(function () {
         console.log(data.length, data);
 
         /** render the list of urls that we get from the server as iFrames */
-
-
-        manageIframes(data);
+        console.log(data);
+        if (typeof data['success'] !== "undefined") {
+          displayMessage(data["success"] + " pages preloaded");
+        }
+        else {
+          manageIframes(data);
+        }
       },
     });
   });
@@ -105,4 +113,9 @@ let displayIframes = (data) => {
     wrapper.appendChild(insideWrapper);
     document.getElementById("framesContainer").appendChild(wrapper);
   });
+};
+
+let displayMessage = (message) => {
+  $("#framesContainer").empty();
+  $("#framesContainer").html(message);
 };

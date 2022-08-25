@@ -71,6 +71,7 @@ input {
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
+  vertical-align: middle;
 }
 #input {
   width: 50vw;
